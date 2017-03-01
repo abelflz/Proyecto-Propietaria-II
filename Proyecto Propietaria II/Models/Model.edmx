@@ -1,0 +1,518 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="BankingModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CONCURRENCIA">
+          <Key>
+            <PropertyRef Name="ID_concurrencia" />
+          </Key>
+          <Property Name="ID_concurrencia" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CUENTA">
+          <Key>
+            <PropertyRef Name="Numero_cuenta" />
+          </Key>
+          <Property Name="Numero_cuenta" Type="numeric" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="Cedula_usuario" Type="numeric" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="balanceActual_cuenta" Type="int" Nullable="false" />
+          <Property Name="balanceDisponible_cuenta" Type="int" Nullable="false" />
+          <Property Name="consumoTotal_cuenta" Type="int" Nullable="false" />
+          <Property Name="consumoCorte_cuenta" Type="int" Nullable="false" />
+          <Property Name="ingresos_cuenta" Type="numeric" Precision="30" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DIRECCION">
+          <Key>
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="Cedula" Type="numeric" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="NombreCalle_direccion" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Numero_direccion" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="Sector_direccion" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TARJETA_CREDITO">
+          <Key>
+            <PropertyRef Name="ID_tarjeta" />
+          </Key>
+          <Property Name="ID_tarjeta" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Cedula_usuario" Type="numeric" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="ID_concurrencia" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="FechaVencimiento_tarjeta" Type="date" Nullable="false" />
+          <Property Name="CVV_tajeta" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="PIN_tarjeta" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TARJETA_DEBITO">
+          <Key>
+            <PropertyRef Name="ID_tarjetaDebito" />
+          </Key>
+          <Property Name="ID_tarjetaDebito" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Numero_cuenta" Type="numeric" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="CVV_tarjetaDebito" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="PIN_tarjetaDebito" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fechaVencimiento_tarjetaDebito" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TRANSACCIONES">
+          <Key>
+            <PropertyRef Name="ID_transacciones" />
+          </Key>
+          <Property Name="ID_transacciones" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ID_tarjeta" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ID_concurrencia" Type="varchar" MaxLength="8" Nullable="false" />
+          <Property Name="nombreComercio_transacciones" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="tipoComercio_transacciones" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="fecha_transacciones" Type="date" Nullable="false" />
+          <Property Name="monto_transacciones" Type="numeric" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="Cedula_usuario" />
+          </Key>
+          <Property Name="Cedula_usuario" Type="numeric" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="Nombre_Completo" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="FechaNacimiento_usuario" Type="date" Nullable="false" />
+          <Property Name="Usuario" Type="varchar" MaxLength="20" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__CUENTA__Cedula_u__1B0907CE">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CUENTA" Type="Self.CUENTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="Cedula_usuario" />
+            </Principal>
+            <Dependent Role="CUENTA">
+              <PropertyRef Name="Cedula_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DIRECCION__Cedul__1273C1CD">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="DIRECCION" Type="Self.DIRECCION" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="Cedula_usuario" />
+            </Principal>
+            <Dependent Role="DIRECCION">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TARJETA_C__Cedul__182C9B23">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TARJETA_CREDITO" Type="Self.TARJETA_CREDITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="Cedula_usuario" />
+            </Principal>
+            <Dependent Role="TARJETA_CREDITO">
+              <PropertyRef Name="Cedula_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TARJETA_C__PIN_t__173876EA">
+          <End Role="CONCURRENCIA" Type="Self.CONCURRENCIA" Multiplicity="1" />
+          <End Role="TARJETA_CREDITO" Type="Self.TARJETA_CREDITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONCURRENCIA">
+              <PropertyRef Name="ID_concurrencia" />
+            </Principal>
+            <Dependent Role="TARJETA_CREDITO">
+              <PropertyRef Name="ID_concurrencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TARJETA_D__Numer__1DE57479">
+          <End Role="CUENTA" Type="Self.CUENTA" Multiplicity="1" />
+          <End Role="TARJETA_DEBITO" Type="Self.TARJETA_DEBITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUENTA">
+              <PropertyRef Name="Numero_cuenta" />
+            </Principal>
+            <Dependent Role="TARJETA_DEBITO">
+              <PropertyRef Name="Numero_cuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSACCI__ID_ta__20C1E124">
+          <End Role="TARJETA_CREDITO" Type="Self.TARJETA_CREDITO" Multiplicity="1" />
+          <End Role="TRANSACCIONES" Type="Self.TRANSACCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TARJETA_CREDITO">
+              <PropertyRef Name="ID_tarjeta" />
+            </Principal>
+            <Dependent Role="TRANSACCIONES">
+              <PropertyRef Name="ID_tarjeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSACCI__ID_ta__21B6055D">
+          <End Role="TARJETA_DEBITO" Type="Self.TARJETA_DEBITO" Multiplicity="1" />
+          <End Role="TRANSACCIONES" Type="Self.TRANSACCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TARJETA_DEBITO">
+              <PropertyRef Name="ID_tarjetaDebito" />
+            </Principal>
+            <Dependent Role="TRANSACCIONES">
+              <PropertyRef Name="ID_tarjeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BankingModelStoreContainer">
+          <EntitySet Name="CONCURRENCIA" EntityType="Self.CONCURRENCIA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CUENTA" EntityType="Self.CUENTA" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DIRECCION" EntityType="Self.DIRECCION" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TARJETA_CREDITO" EntityType="Self.TARJETA_CREDITO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TARJETA_DEBITO" EntityType="Self.TARJETA_DEBITO" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TRANSACCIONES" EntityType="Self.TRANSACCIONES" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CUENTA__Cedula_u__1B0907CE" Association="Self.FK__CUENTA__Cedula_u__1B0907CE">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CUENTA" EntitySet="CUENTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DIRECCION__Cedul__1273C1CD" Association="Self.FK__DIRECCION__Cedul__1273C1CD">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DIRECCION" EntitySet="DIRECCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TARJETA_C__Cedul__182C9B23" Association="Self.FK__TARJETA_C__Cedul__182C9B23">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TARJETA_CREDITO" EntitySet="TARJETA_CREDITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TARJETA_C__PIN_t__173876EA" Association="Self.FK__TARJETA_C__PIN_t__173876EA">
+            <End Role="CONCURRENCIA" EntitySet="CONCURRENCIA" />
+            <End Role="TARJETA_CREDITO" EntitySet="TARJETA_CREDITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TARJETA_D__Numer__1DE57479" Association="Self.FK__TARJETA_D__Numer__1DE57479">
+            <End Role="CUENTA" EntitySet="CUENTA" />
+            <End Role="TARJETA_DEBITO" EntitySet="TARJETA_DEBITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSACCI__ID_ta__20C1E124" Association="Self.FK__TRANSACCI__ID_ta__20C1E124">
+            <End Role="TARJETA_CREDITO" EntitySet="TARJETA_CREDITO" />
+            <End Role="TRANSACCIONES" EntitySet="TRANSACCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSACCI__ID_ta__21B6055D" Association="Self.FK__TRANSACCI__ID_ta__21B6055D">
+            <End Role="TARJETA_DEBITO" EntitySet="TARJETA_DEBITO" />
+            <End Role="TRANSACCIONES" EntitySet="TRANSACCIONES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="BankingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="CONCURRENCIA">
+          <Key>
+            <PropertyRef Name="ID_concurrencia" />
+          </Key>
+          <Property Name="ID_concurrencia" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="TARJETA_CREDITO" Relationship="Self.FK__TARJETA_C__PIN_t__173876EA" FromRole="CONCURRENCIA" ToRole="TARJETA_CREDITO" />
+        </EntityType>
+        <EntityType Name="CUENTA">
+          <Key>
+            <PropertyRef Name="Numero_cuenta" />
+          </Key>
+          <Property Name="Numero_cuenta" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="Cedula_usuario" Type="Decimal" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="balanceActual_cuenta" Type="Int32" Nullable="false" />
+          <Property Name="balanceDisponible_cuenta" Type="Int32" Nullable="false" />
+          <Property Name="consumoTotal_cuenta" Type="Int32" Nullable="false" />
+          <Property Name="consumoCorte_cuenta" Type="Int32" Nullable="false" />
+          <Property Name="ingresos_cuenta" Type="Decimal" Precision="30" Scale="2" Nullable="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__CUENTA__Cedula_u__1B0907CE" FromRole="CUENTA" ToRole="USUARIO" />
+          <NavigationProperty Name="TARJETA_DEBITO" Relationship="Self.FK__TARJETA_D__Numer__1DE57479" FromRole="CUENTA" ToRole="TARJETA_DEBITO" />
+        </EntityType>
+        <EntityType Name="DIRECCION">
+          <Key>
+            <PropertyRef Name="Cedula" />
+          </Key>
+          <Property Name="Cedula" Type="Decimal" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="NombreCalle_direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Numero_direccion" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sector_direccion" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__DIRECCION__Cedul__1273C1CD" FromRole="DIRECCION" ToRole="USUARIO" />
+        </EntityType>
+        <EntityType Name="TARJETA_CREDITO">
+          <Key>
+            <PropertyRef Name="ID_tarjeta" />
+          </Key>
+          <Property Name="ID_tarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Cedula_usuario" Type="Decimal" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="ID_concurrencia" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaVencimiento_tarjeta" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="CVV_tajeta" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PIN_tarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CONCURRENCIA" Relationship="Self.FK__TARJETA_C__PIN_t__173876EA" FromRole="TARJETA_CREDITO" ToRole="CONCURRENCIA" />
+          <NavigationProperty Name="USUARIO" Relationship="Self.FK__TARJETA_C__Cedul__182C9B23" FromRole="TARJETA_CREDITO" ToRole="USUARIO" />
+          <NavigationProperty Name="TRANSACCIONES" Relationship="Self.FK__TRANSACCI__ID_ta__20C1E124" FromRole="TARJETA_CREDITO" ToRole="TRANSACCIONES" />
+        </EntityType>
+        <EntityType Name="TARJETA_DEBITO">
+          <Key>
+            <PropertyRef Name="ID_tarjetaDebito" />
+          </Key>
+          <Property Name="ID_tarjetaDebito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Numero_cuenta" Type="Decimal" Precision="9" Scale="0" Nullable="false" />
+          <Property Name="CVV_tarjetaDebito" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PIN_tarjetaDebito" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fechaVencimiento_tarjetaDebito" Type="DateTime" Nullable="false" Precision="0" />
+          <NavigationProperty Name="CUENTA" Relationship="Self.FK__TARJETA_D__Numer__1DE57479" FromRole="TARJETA_DEBITO" ToRole="CUENTA" />
+          <NavigationProperty Name="TRANSACCIONES" Relationship="Self.FK__TRANSACCI__ID_ta__21B6055D" FromRole="TARJETA_DEBITO" ToRole="TRANSACCIONES" />
+        </EntityType>
+        <EntityType Name="TRANSACCIONES">
+          <Key>
+            <PropertyRef Name="ID_transacciones" />
+          </Key>
+          <Property Name="ID_transacciones" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ID_tarjeta" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ID_concurrencia" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombreComercio_transacciones" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="tipoComercio_transacciones" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="fecha_transacciones" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="monto_transacciones" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+          <NavigationProperty Name="TARJETA_CREDITO" Relationship="Self.FK__TRANSACCI__ID_ta__20C1E124" FromRole="TRANSACCIONES" ToRole="TARJETA_CREDITO" />
+          <NavigationProperty Name="TARJETA_DEBITO" Relationship="Self.FK__TRANSACCI__ID_ta__21B6055D" FromRole="TRANSACCIONES" ToRole="TARJETA_DEBITO" />
+        </EntityType>
+        <EntityType Name="USUARIO">
+          <Key>
+            <PropertyRef Name="Cedula_usuario" />
+          </Key>
+          <Property Name="Cedula_usuario" Type="Decimal" Precision="11" Scale="0" Nullable="false" />
+          <Property Name="Nombre_Completo" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="FechaNacimiento_usuario" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="Usuario1" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="CUENTA" Relationship="Self.FK__CUENTA__Cedula_u__1B0907CE" FromRole="USUARIO" ToRole="CUENTA" />
+          <NavigationProperty Name="DIRECCION" Relationship="Self.FK__DIRECCION__Cedul__1273C1CD" FromRole="USUARIO" ToRole="DIRECCION" />
+          <NavigationProperty Name="TARJETA_CREDITO" Relationship="Self.FK__TARJETA_C__Cedul__182C9B23" FromRole="USUARIO" ToRole="TARJETA_CREDITO" />
+        </EntityType>
+        <Association Name="FK__TARJETA_C__PIN_t__173876EA">
+          <End Role="CONCURRENCIA" Type="Self.CONCURRENCIA" Multiplicity="1" />
+          <End Role="TARJETA_CREDITO" Type="Self.TARJETA_CREDITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CONCURRENCIA">
+              <PropertyRef Name="ID_concurrencia" />
+            </Principal>
+            <Dependent Role="TARJETA_CREDITO">
+              <PropertyRef Name="ID_concurrencia" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CUENTA__Cedula_u__1B0907CE">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="CUENTA" Type="Self.CUENTA" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="Cedula_usuario" />
+            </Principal>
+            <Dependent Role="CUENTA">
+              <PropertyRef Name="Cedula_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TARJETA_D__Numer__1DE57479">
+          <End Role="CUENTA" Type="Self.CUENTA" Multiplicity="1" />
+          <End Role="TARJETA_DEBITO" Type="Self.TARJETA_DEBITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CUENTA">
+              <PropertyRef Name="Numero_cuenta" />
+            </Principal>
+            <Dependent Role="TARJETA_DEBITO">
+              <PropertyRef Name="Numero_cuenta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__DIRECCION__Cedul__1273C1CD">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="DIRECCION" Type="Self.DIRECCION" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="Cedula_usuario" />
+            </Principal>
+            <Dependent Role="DIRECCION">
+              <PropertyRef Name="Cedula" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TARJETA_C__Cedul__182C9B23">
+          <End Role="USUARIO" Type="Self.USUARIO" Multiplicity="1" />
+          <End Role="TARJETA_CREDITO" Type="Self.TARJETA_CREDITO" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USUARIO">
+              <PropertyRef Name="Cedula_usuario" />
+            </Principal>
+            <Dependent Role="TARJETA_CREDITO">
+              <PropertyRef Name="Cedula_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSACCI__ID_ta__20C1E124">
+          <End Role="TARJETA_CREDITO" Type="Self.TARJETA_CREDITO" Multiplicity="1" />
+          <End Role="TRANSACCIONES" Type="Self.TRANSACCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TARJETA_CREDITO">
+              <PropertyRef Name="ID_tarjeta" />
+            </Principal>
+            <Dependent Role="TRANSACCIONES">
+              <PropertyRef Name="ID_tarjeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TRANSACCI__ID_ta__21B6055D">
+          <End Role="TARJETA_DEBITO" Type="Self.TARJETA_DEBITO" Multiplicity="1" />
+          <End Role="TRANSACCIONES" Type="Self.TRANSACCIONES" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TARJETA_DEBITO">
+              <PropertyRef Name="ID_tarjetaDebito" />
+            </Principal>
+            <Dependent Role="TRANSACCIONES">
+              <PropertyRef Name="ID_tarjeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="BankingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CONCURRENCIA" EntityType="Self.CONCURRENCIA" />
+          <EntitySet Name="CUENTA" EntityType="Self.CUENTA" />
+          <EntitySet Name="DIRECCION" EntityType="Self.DIRECCION" />
+          <EntitySet Name="TARJETA_CREDITO" EntityType="Self.TARJETA_CREDITO" />
+          <EntitySet Name="TARJETA_DEBITO" EntityType="Self.TARJETA_DEBITO" />
+          <EntitySet Name="TRANSACCIONES" EntityType="Self.TRANSACCIONES" />
+          <EntitySet Name="USUARIO" EntityType="Self.USUARIO" />
+          <AssociationSet Name="FK__TARJETA_C__PIN_t__173876EA" Association="Self.FK__TARJETA_C__PIN_t__173876EA">
+            <End Role="CONCURRENCIA" EntitySet="CONCURRENCIA" />
+            <End Role="TARJETA_CREDITO" EntitySet="TARJETA_CREDITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CUENTA__Cedula_u__1B0907CE" Association="Self.FK__CUENTA__Cedula_u__1B0907CE">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="CUENTA" EntitySet="CUENTA" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TARJETA_D__Numer__1DE57479" Association="Self.FK__TARJETA_D__Numer__1DE57479">
+            <End Role="CUENTA" EntitySet="CUENTA" />
+            <End Role="TARJETA_DEBITO" EntitySet="TARJETA_DEBITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__DIRECCION__Cedul__1273C1CD" Association="Self.FK__DIRECCION__Cedul__1273C1CD">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="DIRECCION" EntitySet="DIRECCION" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TARJETA_C__Cedul__182C9B23" Association="Self.FK__TARJETA_C__Cedul__182C9B23">
+            <End Role="USUARIO" EntitySet="USUARIO" />
+            <End Role="TARJETA_CREDITO" EntitySet="TARJETA_CREDITO" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSACCI__ID_ta__20C1E124" Association="Self.FK__TRANSACCI__ID_ta__20C1E124">
+            <End Role="TARJETA_CREDITO" EntitySet="TARJETA_CREDITO" />
+            <End Role="TRANSACCIONES" EntitySet="TRANSACCIONES" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TRANSACCI__ID_ta__21B6055D" Association="Self.FK__TRANSACCI__ID_ta__21B6055D">
+            <End Role="TARJETA_DEBITO" EntitySet="TARJETA_DEBITO" />
+            <End Role="TRANSACCIONES" EntitySet="TRANSACCIONES" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="BankingModelStoreContainer" CdmEntityContainer="BankingEntities">
+          <EntitySetMapping Name="CONCURRENCIA">
+            <EntityTypeMapping TypeName="BankingModel.CONCURRENCIA">
+              <MappingFragment StoreEntitySet="CONCURRENCIA">
+                <ScalarProperty Name="ID_concurrencia" ColumnName="ID_concurrencia" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CUENTA">
+            <EntityTypeMapping TypeName="BankingModel.CUENTA">
+              <MappingFragment StoreEntitySet="CUENTA">
+                <ScalarProperty Name="Numero_cuenta" ColumnName="Numero_cuenta" />
+                <ScalarProperty Name="Cedula_usuario" ColumnName="Cedula_usuario" />
+                <ScalarProperty Name="balanceActual_cuenta" ColumnName="balanceActual_cuenta" />
+                <ScalarProperty Name="balanceDisponible_cuenta" ColumnName="balanceDisponible_cuenta" />
+                <ScalarProperty Name="consumoTotal_cuenta" ColumnName="consumoTotal_cuenta" />
+                <ScalarProperty Name="consumoCorte_cuenta" ColumnName="consumoCorte_cuenta" />
+                <ScalarProperty Name="ingresos_cuenta" ColumnName="ingresos_cuenta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DIRECCION">
+            <EntityTypeMapping TypeName="BankingModel.DIRECCION">
+              <MappingFragment StoreEntitySet="DIRECCION">
+                <ScalarProperty Name="Cedula" ColumnName="Cedula" />
+                <ScalarProperty Name="NombreCalle_direccion" ColumnName="NombreCalle_direccion" />
+                <ScalarProperty Name="Numero_direccion" ColumnName="Numero_direccion" />
+                <ScalarProperty Name="Sector_direccion" ColumnName="Sector_direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TARJETA_CREDITO">
+            <EntityTypeMapping TypeName="BankingModel.TARJETA_CREDITO">
+              <MappingFragment StoreEntitySet="TARJETA_CREDITO">
+                <ScalarProperty Name="ID_tarjeta" ColumnName="ID_tarjeta" />
+                <ScalarProperty Name="Cedula_usuario" ColumnName="Cedula_usuario" />
+                <ScalarProperty Name="ID_concurrencia" ColumnName="ID_concurrencia" />
+                <ScalarProperty Name="FechaVencimiento_tarjeta" ColumnName="FechaVencimiento_tarjeta" />
+                <ScalarProperty Name="CVV_tajeta" ColumnName="CVV_tajeta" />
+                <ScalarProperty Name="PIN_tarjeta" ColumnName="PIN_tarjeta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TARJETA_DEBITO">
+            <EntityTypeMapping TypeName="BankingModel.TARJETA_DEBITO">
+              <MappingFragment StoreEntitySet="TARJETA_DEBITO">
+                <ScalarProperty Name="ID_tarjetaDebito" ColumnName="ID_tarjetaDebito" />
+                <ScalarProperty Name="Numero_cuenta" ColumnName="Numero_cuenta" />
+                <ScalarProperty Name="CVV_tarjetaDebito" ColumnName="CVV_tarjetaDebito" />
+                <ScalarProperty Name="PIN_tarjetaDebito" ColumnName="PIN_tarjetaDebito" />
+                <ScalarProperty Name="fechaVencimiento_tarjetaDebito" ColumnName="fechaVencimiento_tarjetaDebito" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TRANSACCIONES">
+            <EntityTypeMapping TypeName="BankingModel.TRANSACCIONES">
+              <MappingFragment StoreEntitySet="TRANSACCIONES">
+                <ScalarProperty Name="ID_transacciones" ColumnName="ID_transacciones" />
+                <ScalarProperty Name="ID_tarjeta" ColumnName="ID_tarjeta" />
+                <ScalarProperty Name="ID_concurrencia" ColumnName="ID_concurrencia" />
+                <ScalarProperty Name="nombreComercio_transacciones" ColumnName="nombreComercio_transacciones" />
+                <ScalarProperty Name="tipoComercio_transacciones" ColumnName="tipoComercio_transacciones" />
+                <ScalarProperty Name="fecha_transacciones" ColumnName="fecha_transacciones" />
+                <ScalarProperty Name="monto_transacciones" ColumnName="monto_transacciones" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USUARIO">
+            <EntityTypeMapping TypeName="BankingModel.USUARIO">
+              <MappingFragment StoreEntitySet="USUARIO">
+                <ScalarProperty Name="Cedula_usuario" ColumnName="Cedula_usuario" />
+                <ScalarProperty Name="Nombre_Completo" ColumnName="Nombre_Completo" />
+                <ScalarProperty Name="FechaNacimiento_usuario" ColumnName="FechaNacimiento_usuario" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

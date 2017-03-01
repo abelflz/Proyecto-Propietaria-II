@@ -12,25 +12,24 @@ namespace Proyecto_Propietaria_II.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class USUARIO
+    public partial class TARJETA_CREDITO
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public USUARIO()
+        public TARJETA_CREDITO()
         {
-            this.CUENTA = new HashSet<CUENTA>();
-            this.TARJETA_CREDITO = new HashSet<TARJETA_CREDITO>();
+            this.TRANSACCIONES = new HashSet<TRANSACCIONES>();
         }
-        
-        public decimal Cedula_usuario { get; set; }
-        public string Nombre_Completo { get; set; }
-        public System.DateTime FechaNacimiento_usuario { get; set; }
-        public string Usuario1 { get; set; }
-        public string Password { get; set; }
     
+        public string ID_tarjeta { get; set; }
+        public decimal Cedula_usuario { get; set; }
+        public string ID_concurrencia { get; set; }
+        public System.DateTime FechaVencimiento_tarjeta { get; set; }
+        public string CVV_tajeta { get; set; }
+        public string PIN_tarjeta { get; set; }
+    
+        public virtual CONCURRENCIA CONCURRENCIA { get; set; }
+        public virtual USUARIO USUARIO { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CUENTA> CUENTA { get; set; }
-        public virtual DIRECCION DIRECCION { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<TARJETA_CREDITO> TARJETA_CREDITO { get; set; }
+        public virtual ICollection<TRANSACCIONES> TRANSACCIONES { get; set; }
     }
 }
