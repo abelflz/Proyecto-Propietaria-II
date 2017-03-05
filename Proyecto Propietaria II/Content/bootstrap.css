@@ -58,7 +58,10 @@ html {
 }
 
 body {
-  margin: 0;
+    background: #3a5fee;
+    font-family: "Roboto", sans-serif;
+    -webkit-font-smoothing: antialiased;
+     margin: 0;
 }
 
 a:focus {
