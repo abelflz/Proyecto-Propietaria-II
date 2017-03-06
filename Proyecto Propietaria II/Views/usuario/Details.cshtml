@@ -1,0 +1,58 @@
+﻿@model Proyecto_Propietaria_II.Models.USUARIO
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>USUARIO</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre_Completo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre_Completo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FechaNacimiento_usuario)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FechaNacimiento_usuario)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Clave)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Clave)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Usuario1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Usuario1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DIRECCION.NombreCalle_direccion)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DIRECCION.NombreCalle_direccion)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Cedula_usuario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

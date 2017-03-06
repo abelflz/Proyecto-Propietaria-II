@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="478644b20bb64e38a546c1a53980a09d" Name="Diagram1">
+        <EntityTypeShape EntityType="BankingModel.CONCURRENCIA" Width="1.5" PointX="3.75" PointY="9.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankingModel.CUENTA" Width="1.5" PointX="3" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankingModel.DIRECCION" Width="1.5" PointX="3" PointY="6.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankingModel.TARJETA_CREDITO" Width="1.5" PointX="6" PointY="7.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankingModel.TARJETA_DEBITO" Width="1.5" PointX="5.25" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankingModel.TRANSACCIONES" Width="1.5" PointX="7.5" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BankingModel.USUARIO" Width="1.5" PointX="0.75" PointY="4.375" IsExpanded="true" />
+        <AssociationConnector Association="BankingModel.FK__TARJETA_C__PIN_t__21B6055D" ManuallyRouted="false" />
+        <AssociationConnector Association="BankingModel.FK__CUENTA__Cedula_u__2A4B4B5E" ManuallyRouted="false" />
+        <AssociationConnector Association="BankingModel.FK__TARJETA_D__Numer__36B12243" ManuallyRouted="false" />
+        <AssociationConnector Association="BankingModel.FK__DIRECCION__Cedul__1273C1CD" ManuallyRouted="false" />
+        <AssociationConnector Association="BankingModel.FK__TRANSACCI__ID_ta__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="BankingModel.FK__TRANSACCI__ID_ta__3A81B327" ManuallyRouted="false" />
+        <AssociationConnector Association="BankingModel.USUARIO_TARJETA_CREDITO" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

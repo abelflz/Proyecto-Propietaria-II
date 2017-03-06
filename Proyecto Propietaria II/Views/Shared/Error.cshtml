@@ -1,6 +1,13 @@
-﻿<!DOCTYPE html>
+﻿@{
+    Layout = null;
+ }
+
+<!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="~/Content/bootstrap.css" type="text/css" />
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="~/Content/Theme.css" type="text/css" />
     <meta name="viewport" content="width=device-width" />
     <title>Error</title>
 </head>
@@ -9,5 +16,6 @@
         <h1>Error.</h1>
         <h2>An error occurred while processing your request.</h2>
     </hgroup>
+    <button class="btn btn-default" onclick="location.href = '@Url.Action("Index", "Home")'" >Volver a la p&aacute;gina principal</button>
 </body>
 </html>

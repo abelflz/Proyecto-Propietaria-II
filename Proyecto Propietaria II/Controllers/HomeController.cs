@@ -11,7 +11,7 @@ namespace Proyecto_Propietaria_II.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         [HttpPost, ActionName("Index")]
@@ -23,7 +23,7 @@ namespace Proyecto_Propietaria_II.Controllers
                 con.ConnectionString = "Data Source=ABEL-PC;Initial Catalog=Banking;Integrated Security=True";
                 con.Open();
 
-                string query = "select COUNT(Usuario) from LogIn where Usuario = @a and Contrasena = @b";
+                string query = "select COUNT(Cedula_usuario) from USUARIO where Usuario = @a and Clave = @b";
                 SqlCommand cmd = new SqlCommand(query, con);
                 cmd.Parameters.Add(new SqlParameter("@a", UserName));
                 cmd.Parameters.Add(new SqlParameter("@b", Password));
@@ -32,8 +32,8 @@ namespace Proyecto_Propietaria_II.Controllers
 
                 if (verificar == 1)
                 {
-                    ViewBag.Hello = UserName;
                     con.Close();
+                    return View("");
                 }
                 else
                 {
