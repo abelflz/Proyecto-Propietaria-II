@@ -8,21 +8,21 @@
 </head>
 <body>
     <form id="form1" runat="server">
-    <table>
+    <table style="font-family:Arial">
         <h3>Escoja su tanda de estudio</h3>
         <tr>
             <td>
-                <asp:RadioButton ID="RadioButton1" runat="server" Text="Matutino"/> 
+                <asp:RadioButton ID="RadioButton1" runat="server" Text="Matutino" /> 
             </td>
         </tr>
         <tr>
             <td>
-                <asp:RadioButton ID="RadioButton2" runat="server" Text="Mixto"/> 
+                <asp:RadioButton ID="RadioButton2" runat="server" Text="Mixto" /> 
             </td>
         </tr>
         <tr>
             <td>
-                <asp:RadioButton ID="RadioButton3" runat="server" Text="Nocturno"/> 
+                <asp:RadioButton ID="RadioButton3" runat="server" Text="Nocturno" /> 
             </td>
         </tr>
         <tr>

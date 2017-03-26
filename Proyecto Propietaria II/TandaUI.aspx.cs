@@ -17,22 +17,23 @@ namespace Proyecto_Propietaria_II
 
         protected void Button1_Click1(object sender, EventArgs e)
         {
-            CheckList.CheckListSoapClient selectorTanda = new
-                CheckList.CheckListSoapClient();
+            CheckList.CheckListSoapClient selectorTanda = new CheckList.CheckListSoapClient();
 
             if (RadioButton1.Checked)
             {
-                Seleccion.Text = selectorTanda.TandaDeEstudio(Convert.ToString(RadioButton1.Text));
+
+                Seleccion.Text = "Matutino";
             }
             else if (RadioButton2.Checked)
             {
-                Seleccion.Text = selectorTanda.TandaDeEstudio(Convert.ToString(RadioButton1.Text));
+                Seleccion.Text = "Mixto";
             }
-            else
+            else if (RadioButton3.Checked)
             {
-                Seleccion.Text = selectorTanda.TandaDeEstudio(Convert.ToString(RadioButton1.Text));
+                Seleccion.Text = "Nocturno";
             }
 
         }
+
     }
 }
