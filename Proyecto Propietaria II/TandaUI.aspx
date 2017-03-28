@@ -12,17 +12,17 @@
         <h3>Escoja su tanda de estudio</h3>
         <tr>
             <td>
-                <asp:RadioButton ID="RadioButton1" runat="server" Text="Matutino" /> 
+                <asp:RadioButton ID="RadioButton1" runat="server" Text="Matutino" GroupName="Tanda" /> 
             </td>
         </tr>
         <tr>
             <td>
-                <asp:RadioButton ID="RadioButton2" runat="server" Text="Mixto" /> 
+                <asp:RadioButton ID="RadioButton2" runat="server" Text="Mixto" GroupName="Tanda"/> 
             </td>
         </tr>
         <tr>
             <td>
-                <asp:RadioButton ID="RadioButton3" runat="server" Text="Nocturno" /> 
+                <asp:RadioButton ID="RadioButton3" runat="server" Text="Nocturno" GroupName="Tanda"/> 
             </td>
         </tr>
         <tr>
