@@ -17,41 +17,44 @@ namespace Proyecto_Propietaria_II.Controllers
         [HttpPost, ActionName("Index")]
         public ActionResult IndexPost(string UserName, string Password)
         {
-            try
+            if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Password))
             {
-                SqlConnection con = new SqlConnection();
-                con.ConnectionString = "Data Source=ABEL-PC;Initial Catalog=Banking;Integrated Security=True";
-                con.Open();
-
-                string query = "select COUNT(Cedula_usuario) from USUARIO where Usuario = @a and Clave = @b";
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.Add(new SqlParameter("@a", UserName));
-                cmd.Parameters.Add(new SqlParameter("@b", Password));
-
-                int verificar = Convert.ToInt32(cmd.ExecuteScalar());
-
-                if (verificar == 1)
+                ViewBag.User = "Debe llenar todos los campos";
+            }
+            else
+            {
+                try
                 {
-                    con.Close();
-                    return View("");
-                }
-                else
-                {
-                    if (string.IsNullOrEmpty(UserName) || string.IsNullOrEmpty(Password))
+                    SqlConnection con = new SqlConnection();
+                    con.ConnectionString = "Data Source=ABEL-PC;Initial Catalog=Banking;Integrated Security=True";
+                    con.Open();
+
+                    string query = "select COUNT(Cedula_usuario) from USUARIO where Usuario = @a and Clave = @b";
+                    SqlCommand cmd = new SqlCommand(query, con);
+                    cmd.Parameters.Add(new SqlParameter("@a", UserName));
+                    cmd.Parameters.Add(new SqlParameter("@b", Password));
+
+                    int verificar = Convert.ToInt32(cmd.ExecuteScalar());
+
+                    if (verificar == 1)
                     {
-                        ViewBag.User = "Debe llenar todos los campos";
                         con.Close();
+                        return View("");
                     }
                     else
                     {
-                        return View("~/Views/Shared/Error.cshtml");
+                        if (!string.IsNullOrEmpty(UserName) && !string.IsNullOrEmpty(Password))
+                        {
+                            return View("~/Views/Shared/Error.cshtml");
+                        }
                     }
                 }
+                catch (Exception)
+                {
+                    return View("~/Views/Shared/Error.cshtml");
+                }
             }
-            catch (Exception)
-            {
-                return View("~/Views/Shared/Error.cshtml");
-            }
+
             return View();
         }
 
